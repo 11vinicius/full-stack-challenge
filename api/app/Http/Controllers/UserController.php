@@ -21,9 +21,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $this->user->get();
     }
-
     /**
      * Store a newly created resource in storage.
      */
