@@ -1,13 +1,13 @@
 services:
-    postgres:
+    db:
         image: 'postgres:15-alpine'
         working_dir: /application
         volumes:
             - '.:/application'
         environment:
-            - POSTGRES_USER=chalenge
+            - POSTGRES_USER=root
             - POSTGRES_PASSWORD=root
-            - POSTGRES_DB=root
+            - POSTGRES_DB=teste
         ports:
             - '5432:5432'
 
