@@ -9,7 +9,6 @@ function App() {
     <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-
     </Routes>
   )
 }

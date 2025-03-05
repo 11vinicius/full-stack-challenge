@@ -3,7 +3,11 @@ import { InputComponent } from './_components/InputComponent'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from 'zod'
 import { Controller, useForm,  } from "react-hook-form"
-import { ILogin } from './_interfaces/login'
+import { ILogin } from './_interfaces/IAuth'
+import { useAuthStore } from './_stores/authStore'
+import { useNavigate } from "react-router-dom";
+import { use, useEffect } from 'react'
+
 
 
 export function Login() {
@@ -17,11 +21,17 @@ export function Login() {
         resolver: zodResolver(schema),  
     })
 
-    async function onSubmit(data: ILogin) {
-        console.log(data)
+    const { signIn, er, isAuthenticated, loading, resetState } = useAuthStore();
+    const route = useNavigate();
+
+    useEffect(() => {
+        resetState();
+    }, [resetState])
+
+    if(isAuthenticated) {
+        route('/home')
     }
-
-
+    
     return (
         <div className='flex justify-center items-center h-screen bg-gray-800'>
             <div className="w-[400px] rounded-md bg-purple-200 px-12 py-24">
@@ -29,22 +39,27 @@ export function Login() {
                 <Controller
                     control={control}
                     name="email"
-                    defaultValue=''
+                    defaultValue='viniciuscesarlemes@gmail.com'
                     render={({ field: { onChange, value } } ) => 
-                        <InputComponent type='text' value={value} placeholder="Digite Email" error={errors.email?.message? String(errors.email?.message) :null} onchangeText={onChange} />
+                        <InputComponent loading={loading} type='text' value={value} placeholder="Digite Email" error={errors.email?.message? String(errors.email?.message) :null} onchangeText={onChange} />
                     }
                 />
 
                 <Controller
                     control={control}
                     name="password"
-                    defaultValue=''
+                    defaultValue='12345678'
                     render={({ field: { onChange, value } } ) => 
-                        <InputComponent type='password' value={value} placeholder="Digite Password" error={errors.password?.message? String(errors.password?.message) :null} onchangeText={onChange} />
+                        <InputComponent loading={loading}  type='password' value={value} placeholder="Digite Password" error={errors.password?.message? String(errors.password?.message) :null} onchangeText={onChange} />
                     }
                 />
 
-                <ButtonComponent title='Entrar'  onclick={handleSubmit(onSubmit)}/>
+                <ButtonComponent loading={loading} title='Entrar'  onclick={handleSubmit(signIn)}/>
+                {er && 
+                <div className="w-full flex justify-center mt-4 items-center">
+                    <span className="text-red-600 font-semibold text-center">{er}</span>
+                </div>
+                }  
             </div>
         </div>
     )
