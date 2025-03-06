@@ -6,8 +6,6 @@ import { Controller, useForm,  } from "react-hook-form"
 import { ILogin } from './_interfaces/IAuth'
 import { useAuthStore } from './_stores/authStore'
 import { useNavigate } from "react-router-dom";
-import { useEffect } from 'react'
-
 
 export function Login() {
 
@@ -20,12 +18,8 @@ export function Login() {
         resolver: zodResolver(schema),  
     })
 
-    const { signIn, er, isAuthenticated, loading, resetState } = useAuthStore();
+    const { signIn, er, isAuthenticated, loading } = useAuthStore();
     const route = useNavigate();
-
-    useEffect(() => {
-        resetState();
-    }, [resetState])
 
     if(isAuthenticated) {
         route('/')

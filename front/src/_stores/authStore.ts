@@ -1,6 +1,6 @@
 import { create, StateCreator } from 'zustand';
 import { persist, PersistOptions } from 'zustand/middleware';
-import { login } from '../_services/auth'; 
+import { login, logout } from '../_services/auth'; 
 
 interface ILogin {
   email: string;
@@ -13,7 +13,7 @@ interface IAuthStore {
   er: string;
   resetState: () => void;
   signIn: (body: ILogin) => Promise<void>;
-  logout: () => void;
+  signOut: () => void;
 }
 
 type AuthPersistState = Pick<IAuthStore, 'isAuthenticated'>;
@@ -49,9 +49,13 @@ export const useAuthStore = create<IAuthStore, [['zustand/persist', AuthPersistS
         }
       },
 
-      logout: () => {
-        localStorage.removeItem('token');
-        set({ isAuthenticated: false });
+      signOut: async() => {
+        const { status } = await logout()
+
+        if(status==200){
+          localStorage.removeItem('token');
+          set({ isAuthenticated: false });
+        }
       },
     }),
     {
