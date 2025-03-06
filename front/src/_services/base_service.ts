@@ -13,9 +13,14 @@ api.interceptors.response.use(
         return response;
     },
     (error) => {
-        if (error.response.status === 401) {
-            localStorage.removeItem('token');
+        const token = localStorage.getItem('token');
+        if(token){
+            if (error.response.status === 401) {
+                localStorage.removeItem('token');
+                window.location.replace('/login'); 
+            }
         }
+       
         return Promise.reject(error);
     }
 );

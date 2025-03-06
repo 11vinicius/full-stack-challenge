@@ -1,18 +1,8 @@
-import {  useEffect } from "react";
 import { ButtonComponent } from "./_components/ButtonComponent";
 import { useAuthStore } from "./_stores/authStore";
-import { useNavigate } from "react-router-dom";
 
 export function Home() {
-    const { logout, isAuthenticated } = useAuthStore();
-    const route = useNavigate();
-
-    // useEffect(() => {
-    //     if(!isAuthenticated) {
-    //         route('/')
-    //     }
-    // }, [isAuthenticated, logout])
-
+    const { logout } = useAuthStore();
 
     return (
         <div className="h-screen bg-gray-800">
