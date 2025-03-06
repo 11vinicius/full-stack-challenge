@@ -8,5 +8,6 @@ export interface IAuthStore {
     loading: boolean,
     isAuthenticated: boolean,
     signIn: (ILogin: any) => void
+    logout: () => void
     resetState: () => void; 
 }

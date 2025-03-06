@@ -6,8 +6,7 @@ import { Controller, useForm,  } from "react-hook-form"
 import { ILogin } from './_interfaces/IAuth'
 import { useAuthStore } from './_stores/authStore'
 import { useNavigate } from "react-router-dom";
-import { use, useEffect } from 'react'
-
+import { useEffect } from 'react'
 
 
 export function Login() {
@@ -29,7 +28,7 @@ export function Login() {
     }, [resetState])
 
     if(isAuthenticated) {
-        route('/home')
+        route('/')
     }
     
     return (
